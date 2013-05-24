@@ -9,7 +9,8 @@ import re
 import subprocess
 import shutil
 
-from minion.plugin_api import ExternalProcessPlugin
+from minion.plugins.base import ExternalProcessPlugin
+
 
 # Name of the skipfish binary
 SKIPFISH_TOOL_NAME = "skipfish"
@@ -165,7 +166,7 @@ SKIPFISH_ISSUE_DESCRIPTIONS = {
 class SkipfishPlugin(ExternalProcessPlugin):
 
     PLUGIN_NAME = "Skipfish"
-    PLUGIN_VERSION = "0.1"
+    PLUGIN_VERSION = "0.2"
 
     def _skipfish_version(self, path):
         p = subprocess.Popen([path, "-h"], stdout=subprocess.PIPE)

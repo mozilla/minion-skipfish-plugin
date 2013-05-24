@@ -5,11 +5,11 @@
 from setuptools import setup
 
 install_requires = [
-    'minion.plugin_service'
+    'minion-backend',
 ]
 
-setup(name="minion.skipfish_plugin",
-      version="0.1",
+setup(name="minion-skipfish-plugin",
+      version="0.2",
       description="Skipfish Plugin for Minion",
       url="https://github.com/mozilla/minion-skipfish-plugin/",
       author="Mozilla",
