@@ -86,82 +86,126 @@ SKIPFISH_PRESETS = {
 SKIPFISH_DEFAULT_PRESET = 'orderly-scan-with-extensions-only-brute-force'
 
 # Mapping from skipfish issue number to what Minion issues expect
-SKIPFISH_ISSUE_SEVERITY = ['Informational', 'Error', 'Low', 'Medium', 'High']
+SKIPFISH_ISSUE_SEVERITY = ['Info', 'Error', 'Low', 'Medium', 'High']
 
 # Mappings from skipfish issue types to descriptions
 SKIPFISH_ISSUE_DESCRIPTIONS = {
-  "10101": "SSL certificate issuer information",
-  "10201": "New HTTP cookie added",
-  "10202": "New 'Server' header value seen",
-  "10203": "New 'Via' header value seen",
-  "10204": "New 'X-*' header value seen",
-  "10205": "New 404 signature seen",
-  "10401": "Resource not directly accessible",
-  "10402": "HTTP authentication required",
-  "10403": "Server error triggered",
-  "10501": "All external links",
-  "10502": "External URL redirector",
-  "10503": "All e-mail addresses",
-  "10504": "Links to unknown protocols",
-  "10505": "Unknown form field (can't autocomplete)",
-  "10601": "HTML form (not classified otherwise)",
-  "10602": "Password entry form - consider brute-force",
-  "10603": "File upload form",
-  "10701": "User-supplied link rendered on a page",
-  "10801": "Incorrect or missing MIME type (low risk)",
-  "10802": "Generic MIME used (low risk)",
-  "10803": "Incorrect or missing charset (low risk)",
-  "10804": "Conflicting MIME / charset info (low risk)",
-  "10901": "Numerical filename - consider enumerating",
-  "10902": "OGNL-like parameter behavior",
+  10101: "SSL certificate issuer information",
+  10102: "SSL cert will expire",
 
-  "20101": "Resource fetch failed",
-  "20102": "Limits exceeded, fetch suppressed",
-  "20201": "Directory behavior checks failed (no brute force)",
-  "20202": "Parent behavior checks failed (no brute force)",
-  "20203": "IPS filtering enabled",
-  "20204": "IPS filtering disabled again",
-  "20205": "Response varies randomly, skipping checks",
-  "20301": "Node should be a directory, detection error?",
+  10201: "New HTTP cookie added",
+  10202: "New 'Server' header value seen",
+  10203: "New 'Via' header value seen",
+  10204: "New 'X-*' header value seen",
+  10205: "New 404 signature seen",
 
-  "30101": "HTTP credentials seen in URLs",
-  "30201": "SSL certificate expired or not yet valid",
-  "30202": "Self-signed SSL certificate",
-  "30203": "SSL certificate host name mismatch",
-  "30204": "No SSL certificate data found",
-  "30301": "Directory listing restrictions bypassed",
-  "30401": "Redirection to attacker-supplied URLs",
-  "30402": "Attacker-supplied URLs in embedded content (lower risk)",
-  "30501": "External content embedded on a page (lower risk)",
-  "30502": "Mixed content embedded on a page (lower risk)",
-  "30601": "HTML form with no apparent XSRF protection",
-  "30602": "JSON response with no apparent XSSI protection",
-  "30701": "Incorrect caching directives (lower risk)",
-  "30801": "User-controlled response prefix (BOM / plugin attacks)",
+  10401: "Resource not directly accessible",
+  10402: "HTTP authentication required",
+  10403: "Server error triggered",
+  10404: "Directory listing found",
+  10405: "Hidden resource found",
 
-  "40101": "XSS vector in document body",
-  "40102": "XSS vector via arbitrary URLs",
-  "40103": "HTTP response header splitting",
-  "40104": "Attacker-supplied URLs in embedded content (higher risk)",
-  "40201": "External content embedded on a page (higher risk)",
-  "40202": "Mixed content embedded on a page (higher risk)",
-  "40301": "Incorrect or missing MIME type (higher risk)",
-  "40302": "Generic MIME type (higher risk)",
-  "40304": "Incorrect or missing charset (higher risk)",
-  "40305": "Conflicting MIME / charset info (higher risk)",
-  "40401": "Interesting file",
-  "40402": "Interesting server message",
-  "40501": "Directory traversal / file inclusion possible",
-  "40601": "Incorrect caching directives (higher risk)",
-  "40701": "Password form submits from or to non-HTTPS page",
+  10501: "All external links",
+  10502: "External URL redirector",
+  10503: "All e-mail addresses",
+  10504: "Links to unknown protocols",
+  10505: "Unknown form field (can't autocomplete)",
 
-  "50101": "Server-side XML injection vector",
-  "50102": "Shell injection vector",
-  "50103": "Query injection vector",
-  "50104": "Format string vector",
-  "50105": "Integer overflow vector",
-  "50201": "SQL query or similar syntax in parameters",
-  "50301": "PUT request accepted"
+  10601: "HTML form (not classified otherwise)",
+  10602: "Password entry form - consider brute-force",
+  10603: "File upload form",
+
+  10701: "User-supplied link rendered on a page",
+
+  10801: "Incorrect or missing MIME type (low risk)",
+  10802: "Generic MIME used (low risk)",
+  10803: "Incorrect or missing charset (low risk)",
+  10804: "Conflicting MIME / charset info (low risk)",
+
+  10901: "Numerical filename - consider enumerating",
+  10902: "OGNL-like parameter behavior",
+
+  10909: "Signature detected info",
+
+  20101: "Resource fetch failed",
+  20102: "Limits exceeded, fetch suppressed",
+
+  20201: "Directory behavior checks failed (no brute force)",
+  20202: "Parent behavior checks failed (no brute force)",
+  20203: "IPS filtering enabled",
+  20204: "IPS filtering disabled again",
+  20205: "Response varies randomly, skipping checks",
+
+  20301: "Node should be a directory, detection error?",
+
+  30101: "HTTP credentials seen in URLs",
+
+  30201: "SSL certificate expired or not yet valid",
+  30202: "Self-signed SSL certificate",
+  30203: "SSL certificate host name mismatch",
+  30204: "No SSL certificate data found",
+  30205: "Weak cipher negotiated",
+  30206: "Possible \0 in host name",
+
+  30301: "Directory listing restrictions bypassed",
+
+  30401: "Redirection to attacker-supplied URLs",
+  30402: "Attacker-supplied URLs in embedded content (lower risk)",
+
+  30501: "External content embedded on a page (lower risk)",
+  30502: "Mixed content embedded on a page (lower risk)",
+  30503: "HTTPS -> HTTP form",
+
+  30601: "HTML form with no apparent XSRF protection",
+  30602: "JSON response with no apparent XSSI protection",
+
+  30701: "Incorrect caching directives (lower risk)",
+
+  30801: "User-controlled response prefix (BOM / plugin attacks)",
+  30802: "XSS vector, lower risk",
+
+  30901: "Injected string in header",
+
+  30909: "Signature detected low",
+
+  40101: "XSS vector in document body",
+  40102: "XSS vector via arbitrary URLs",
+  40103: "HTTP response header splitting",
+  40104: "Attacker-supplied URLs in embedded content (higher risk)",
+  40105: "TAG attribute XSS",
+
+  40201: "External content embedded on a page (higher risk)",
+  40202: "Mixed content embedded on a page (higher risk)",
+
+  40301: "Incorrect or missing MIME type (higher risk)",
+  40302: "Generic MIME type (higher risk)",
+  40304: "Incorrect or missing charset (higher risk)",
+  40305: "Conflicting MIME / charset info (higher risk)",
+
+  40401: "Interesting file",
+  40402: "Interesting server message",
+
+  40501: "Directory traversal / file inclusion possible",
+
+  40601: "Incorrect caching directives (higher risk)",
+
+  40701: "Password form submits from or to non-HTTPS page",
+
+  40909: "Signature detected moderate",
+
+  50101: "Server-side XML injection vector",
+  50102: "Shell injection vector",
+  50103: "Query injection vector",
+  50104: "Format string vector",
+  50105: "Integer overflow vector",
+  50106: "Local file inclusion",
+  50107: "Remote file inclusion",
+
+  50201: "SQL query or similar syntax in parameters",
+
+  50301: "PUT request accepted",
+
+  50909: "Signature detected high",
 }
 
 class SkipfishPlugin(ExternalProcessPlugin):
@@ -170,14 +214,15 @@ class SkipfishPlugin(ExternalProcessPlugin):
     PLUGIN_VERSION = "0.2"
 
     def _skipfish_version(self, path):
-        p = subprocess.Popen([path, "-h"], stdout=subprocess.PIPE)
-        while True:
-            line = p.stdout.readline()
-            if not line:
-                return
+        version = None
+        p = subprocess.Popen([path, "-h"], stdout=subprocess.PIPE, bufsize=0)
+        for line in p.stdout:
             m = re.match(".*version (\\d+\.\\d+)b", line)
-            if m:
-                return m.group(1)
+            if m is not None:
+                version = m.group(1)
+                break
+        p.terminate()
+        return version
 
     def _process_skipfish_samples(self, samples_path):
         # The samples.js file needs to be tranformed into something
@@ -262,9 +307,16 @@ class SkipfishPlugin(ExternalProcessPlugin):
                 minion_issues = []
                 samples = self._process_skipfish_samples(samples_path)
                 for issue in samples.get('issue_samples'):
-                    minion_issues.append({ "Severity": SKIPFISH_ISSUE_SEVERITY[issue['severity']],
-                                           "Summary": SKIPFISH_ISSUE_DESCRIPTIONS[str(issue['type'])],
-                                           "URLs": [s['url'] for s in issue['samples']] })
+                    i = { "Severity": SKIPFISH_ISSUE_SEVERITY[issue['severity']],
+                          "Summary": SKIPFISH_ISSUE_DESCRIPTIONS.get(issue['type'], str(issue['type'])),
+                          "URLs": [] } # s['url'] for s in issue['samples']] }
+                    for sample in issue.get('samples', []):
+                        if sample.get('url', '') != '':
+                            url = { 'URL': sample['url'] }
+                            if sample.get('extra', '') != '':
+                                url['Extra'] = sample.get('extra')
+                            i['URLs'].append(url)
+                    minion_issues.append(i)
                 self.report_issues(minion_issues)
                 # Add the report and the (updated) dictionary to the artifacts
                 self.report_artifacts("Skipfish Report", [SKIPFISH_REPORT_DIRECTORY])
