@@ -4,6 +4,7 @@
 
 
 import ast
+import logging
 import os
 import re
 import subprocess
@@ -170,9 +171,11 @@ class SkipfishPlugin(ExternalProcessPlugin):
 
     def _skipfish_version(self, path):
         p = subprocess.Popen([path, "-h"], stdout=subprocess.PIPE)
-        while not p.returncode:
+        while True:
             line = p.stdout.readline()
-            m = re.match("^skipfish version (\\d+\.\\d+)b", line)
+            if not line:
+                return
+            m = re.match(".*version (\\d+\.\\d+)b", line)
             if m:
                 return m.group(1)
 
