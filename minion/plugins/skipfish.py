@@ -280,6 +280,12 @@ class SkipfishPlugin(ExternalProcessPlugin):
             args += ["-W", "/dev/null", "-S", SKIPFISH_DICTIONARY]
         else:
             args += ["-W", SKIPFISH_DICTIONARY]
+
+        auth = self.configuration.get('auth')
+        if auth:
+            if auth['type'] == 'basic':
+                args += ["-A", "%s:%s" % (auth['username'], auth['password'])]
+
         args += [self.configuration['target']]
         self.skipfish_stdout = ""
         self.skipfish_stderr = ""
