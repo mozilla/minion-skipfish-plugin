@@ -297,6 +297,19 @@ class SkipfishPlugin(ExternalProcessPlugin):
                     cookie_args += ["-C", '%s=%s' % (session['token'], session['value'])]
                 args += cookie_args
 
+            elif auth_type == 'form':
+                # map these ourselves to avoid invalid option
+                opts = {'form-url': '--auth-form-url',
+                    'form-action-url': '--auth-form-target',
+                    'username': '--auth-user',
+                    'username-field': '--auth-user-field',
+                    'password': '--auth-pass',
+                    'password-field': '--auth-pass-field',
+                    'verify-url': '--auth-verify-url'}
+                for opt, cmd_opt in opts:
+                    if auth.get(opt):
+                        args += [cmd_opt, auth[opt]]
+
         args += [self.configuration['target']]
         self.skipfish_stdout = ""
         self.skipfish_stderr = ""
