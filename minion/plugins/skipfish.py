@@ -283,8 +283,19 @@ class SkipfishPlugin(ExternalProcessPlugin):
 
         auth = self.configuration.get('auth')
         if auth:
-            if auth['type'] == 'basic':
+            auth_type = auth['type']
+            if auth_type == 'basic':
                 args += ["-A", "%s:%s" % (auth['username'], auth['password'])]
+            elif auth_type == 'session':
+                # reject any new cookie created
+                # see http://code.google.com/p/skipfish/wiki/Authentication#Cookie_authentication
+                if auth.get('no-new-cookie', True):
+                    cookie_args = ['-N']
+                else:
+                    cookie_args = []
+                for session in auth.get('sessions'):
+                    cookie_args += ["-C", '%s=%s' % (session['token'], session['value'])]
+                args += cookie_args
 
         args += [self.configuration['target']]
         self.skipfish_stdout = ""
