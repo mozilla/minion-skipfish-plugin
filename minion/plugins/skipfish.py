@@ -280,6 +280,36 @@ class SkipfishPlugin(ExternalProcessPlugin):
             args += ["-W", "/dev/null", "-S", SKIPFISH_DICTIONARY]
         else:
             args += ["-W", SKIPFISH_DICTIONARY]
+
+        auth = self.configuration.get('auth')
+        if auth:
+            auth_type = auth['type']
+            if auth_type == 'basic':
+                args += ["-A", "%s:%s" % (auth['username'], auth['password'])]
+            elif auth_type == 'session':
+                # reject any new cookie created
+                # see http://code.google.com/p/skipfish/wiki/Authentication#Cookie_authentication
+                if auth.get('no-new-cookie', True):
+                    cookie_args = ['-N']
+                else:
+                    cookie_args = []
+                for session in auth.get('sessions'):
+                    cookie_args += ["-C", '%s=%s' % (session['token'], session['value'])]
+                args += cookie_args
+
+            elif auth_type == 'form':
+                # map these ourselves to avoid invalid option
+                opts = {'form-url': '--auth-form-url',
+                    'form-action-url': '--auth-form-target',
+                    'username': '--auth-user',
+                    'username-field': '--auth-user-field',
+                    'password': '--auth-pass',
+                    'password-field': '--auth-pass-field',
+                    'verify-url': '--auth-verify-url'}
+                for opt, cmd_opt in opts:
+                    if auth.get(opt):
+                        args += [cmd_opt, auth[opt]]
+
         args += [self.configuration['target']]
         self.skipfish_stdout = ""
         self.skipfish_stderr = ""
