@@ -32,7 +32,8 @@ SKIPFISH_STDERR_LOG = "skipfish.stderr.txt"
 SKIPFISH_DICTIONARY = "dictionary.wl"
 
 # Paths where we look for skipfish dictionaries (currently just following Debian/Ubuntu)
-SKIPFISH_DICTIONARY_PATHS = ["/usr/share/skipfish/dictionaries"]
+SKIPFISH_DICTIONARY_PATHS = ["/usr/share/skipfish/dictionaries",
+                             "/usr/local/Cellar/skipfish/2.10b/libexec/dictionaries"]
 
 # Name of the directory where the report is written
 SKIPFISH_REPORT_DIRECTORY = 'report'
@@ -241,7 +242,7 @@ class SkipfishPlugin(ExternalProcessPlugin):
             samples = samples.replace('];', ']', 1)
             samples = '{\n' + samples + '}'
             return ast.literal_eval(samples)
-        
+
     def _locate_dictionary(self, dictionary_name):
         # Special case for /dev/null
         if os.path.isabs(dictionary_name):
@@ -258,7 +259,7 @@ class SkipfishPlugin(ExternalProcessPlugin):
         if skipfish_path is None:
             path = os.environ['PATH']
             raise Exception("Cannot find (%s) in PATH (%s)" % (SKIPFISH_TOOL_NAME,path))
-        
+
         # Ensure skipfish found falls within the version boundary
         skipfish_version = self._skipfish_version(skipfish_path)
         if skipfish_version is None:
