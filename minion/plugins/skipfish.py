@@ -31,9 +31,12 @@ SKIPFISH_STDERR_LOG = "skipfish.stderr.txt"
 # Name of the dictionary that we use in our work directory
 SKIPFISH_DICTIONARY = "dictionary.wl"
 
+# We need some special case for the Homebrew install of skipfish
+SKIPFISH_HOMEBREW_LIBEXEC_PATH = "/usr/local/Cellar/skipfish/2.10b/libexec"
+
 # Paths where we look for skipfish dictionaries (currently just following Debian/Ubuntu)
 SKIPFISH_DICTIONARY_PATHS = ["/usr/share/skipfish/dictionaries",
-                             "/usr/local/Cellar/skipfish/2.10b/libexec/dictionaries"]
+                             SKIPFISH_HOMEBREW_LIBEXEC_PATH + "/dictionaries"]
 
 # Name of the directory where the report is written
 SKIPFISH_REPORT_DIRECTORY = 'report'
@@ -282,6 +285,15 @@ class SkipfishPlugin(ExternalProcessPlugin):
         args += config['options']
         # For version >= 2.04, this is necessary
         args += ["-W", "/dev/null", "-S", SKIPFISH_DICTIONARY]
+
+        # Due to a bug in the Homebrew skipfish port, we need to setup
+        # our own signatures config file that has absolute paths to the
+        # individual signature files.
+        if os.path.exists(SKIPFISH_HOMEBREW_LIBEXEC_PATH):
+            with open("signatures.conf", "w") as f:
+                for signature_file in ('mime', 'files', 'messages', 'apps', 'context'):
+                    f.write(SKIPFISH_HOMEBREW_LIBEXEC_PATH + '/signatures/' + signature_file + '.sigs')
+        args += ['-z', 'signatures.conf']
 
         auth = self.configuration.get('auth')
         if auth:
