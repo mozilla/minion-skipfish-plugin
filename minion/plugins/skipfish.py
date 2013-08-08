@@ -279,10 +279,8 @@ class SkipfishPlugin(ExternalProcessPlugin):
         # Run skipfish as a spawned process
         args = SKIPFISH_BASE_OPTIONS
         args += config['options']
-        if skipfish_version >= "2.04":
-            args += ["-W", "/dev/null", "-S", SKIPFISH_DICTIONARY]
-        else:
-            args += ["-W", SKIPFISH_DICTIONARY]
+        # For version >= 2.04, this is necessary
+        args += ["-W", "/dev/null", "-S", SKIPFISH_DICTIONARY]
 
         auth = self.configuration.get('auth')
         if auth:
