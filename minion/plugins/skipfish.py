@@ -216,8 +216,9 @@ class SkipfishPlugin(ExternalProcessPlugin):
     def _skipfish_version(self, path):
         version = None
         p = subprocess.Popen([path, "-h"], stdout=subprocess.PIPE, bufsize=0)
+        version_regex = ".*version (\\d+\.\\d+[a-z])"
         for line in p.stdout:
-            m = re.match(".*version (\\d+\.\\d+)b", line)
+            m = re.match(version_regex, line)
             if m is not None:
                 version = m.group(1)
                 break
@@ -257,11 +258,13 @@ class SkipfishPlugin(ExternalProcessPlugin):
         if skipfish_path is None:
             path = os.environ['PATH']
             raise Exception("Cannot find (%s) in PATH (%s)" % (SKIPFISH_TOOL_NAME,path))
+        
+        # Ensure skipfish found falls within the version boundary
         skipfish_version = self._skipfish_version(skipfish_path)
         if skipfish_version is None:
             raise Exception("Unable to discover the version of Skipfish at " + skipfish_path)
-        if skipfish_version < SKIPFISH_MIN_VERSION or skipfish_version > SKIPFISH_MAX_VERSION:
-            raise Exception("Unknown Skipfish version. We only support %sb - %sb" % (SKIPFISH_MIN_VERSION, SKIPFISH_MAX_VERSION))
+        elif skipfish_version < SKIPFISH_MIN_VERSION or skipfish_version > SKIPFISH_MAX_VERSION:
+            raise Exception("Unknown Skipfish version. We only support %s - %s" % (SKIPFISH_MIN_VERSION, SKIPFISH_MAX_VERSION))
         # See if a good preset was specified, or use our default
         preset = self.configuration.get('preset') or SKIPFISH_DEFAULT_PRESET
         if preset not in SKIPFISH_PRESETS:
