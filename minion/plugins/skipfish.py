@@ -293,7 +293,7 @@ class SkipfishPlugin(ExternalProcessPlugin):
             with open("signatures.conf", "w") as f:
                 for signature_file in ('mime', 'files', 'messages', 'apps', 'context'):
                     f.write(SKIPFISH_HOMEBREW_LIBEXEC_PATH + '/signatures/' + signature_file + '.sigs')
-        args += ['-z', 'signatures.conf']
+            args += ['-z', 'signatures.conf']
 
         auth = self.configuration.get('auth')
         if auth:
